@@ -9,7 +9,7 @@ public class Turtle extends BaseActor{
                 "turtle-4.png", "turtle-5.png", "turtle-6.png"};
         loadAnimationFromFiles(filenames, 0.1f, true);
         setAcceleration(100);
-        setMaxSpeed(2000);
+        setMaxSpeed(1000);
         setDeceleration(400);
         setBoundaryPolygon(8);
     }

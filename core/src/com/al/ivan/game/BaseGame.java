@@ -21,6 +21,7 @@ public abstract class BaseGame extends Game {
     }
 
     public void create() {
-
+        InputMultiplexer im = new InputMultiplexer();
+        Gdx.input.setInputProcessor(im);
     }
 }

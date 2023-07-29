@@ -6,23 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public abstract class BaseScreen implements Screen, InputProcessor
 {
     protected Stage mainStage;
     protected Stage uiStage;
-    protected Table uiTable;
 
     public BaseScreen()
     {
         mainStage = new Stage();
         uiStage = new Stage();
-
-        uiTable = new Table();
-        uiTable.setFillParent(true);
-        uiStage.addActor(uiTable);
 
         initialize();
     }
@@ -68,10 +61,10 @@ public abstract class BaseScreen implements Screen, InputProcessor
      */
     public void show()
     {
-//        InputMultiplexer im = (InputMultiplexer)Gdx.input.getInputProcessor();
-//        //im.addProcessor(this);
-//        im.addProcessor(uiStage);
-//        im.addProcessor(mainStage);
+        InputMultiplexer im = (InputMultiplexer)Gdx.input.getInputProcessor();
+        im.addProcessor(this);
+        im.addProcessor(uiStage);
+        im.addProcessor(mainStage);
     }
 
     /**
@@ -81,10 +74,10 @@ public abstract class BaseScreen implements Screen, InputProcessor
      */
     public void hide()
     {
-//        InputMultiplexer im = (InputMultiplexer)Gdx.input.getInputProcessor();
-//        //im.removeProcessor(this);
-//        im.removeProcessor(uiStage);
-//        im.removeProcessor(mainStage);
+        InputMultiplexer im = (InputMultiplexer)Gdx.input.getInputProcessor();
+        im.removeProcessor(this);
+        im.removeProcessor(uiStage);
+        im.removeProcessor(mainStage);
     }
 
     // methods required by InputProcessor interface
