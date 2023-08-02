@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class LevelScreen extends BaseScreen{
 
     private Turtle turtle;
+    private TurtleEnemy turtleEnemy;
     protected Touchpad touchpad;
     @Override
     public void initialize() {
@@ -20,6 +22,7 @@ public class LevelScreen extends BaseScreen{
         BaseActor.setWorldBounds(ocean);
         turtle = new Turtle(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, mainStage);
         turtle.setSize(turtle.getWidth() * 1.5f, turtle.getHeight() * 1.5f);
+        turtleEnemy = new TurtleEnemy(500, 500, mainStage);
 
         // отвечает за изображение джойстика
         // Чтобы джойстик работал необходимо в класс BaseScreen добавить следующие методы
@@ -58,7 +61,7 @@ public class LevelScreen extends BaseScreen{
 
     @Override
     public void update(float dt) {
-        // Этод метод заставляет двигаться звездолет с помощью джойстика
+        // Этод метод заставляет двигаться черепаху с помощью джойстика
         Vector2 direction = new Vector2(this.touchpad.getKnobPercentX(), this.touchpad.getKnobPercentY());
         //Vector2 direction = new Vector2(Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
         float length = direction.len();
@@ -67,7 +70,8 @@ public class LevelScreen extends BaseScreen{
             this.turtle.setDeceleration(500);
             this.turtle.setMotionAngle(direction.angle());
         }
-        // Этод метод заставляет двигаться звездолет с помощью джойстика(конец)
+        // Этод метод заставляет двигаться черепаху с помощью джойстика(конец)
+        //turtleEnemy.freeMovementInFourDirections();
     }
 
     @Override

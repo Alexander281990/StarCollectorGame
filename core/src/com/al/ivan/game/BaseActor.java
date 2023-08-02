@@ -2,6 +2,7 @@ package com.al.ivan.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -247,8 +249,9 @@ public class BaseActor extends Group {
     }
 
     // Метод, который движет обьект влево и право с разной скоростью и длинной
-    public void leftRightMoving(float intervalTimeStart, float intervalTimeEnd, float speedStart, float speedEnd, float setAngleStart, float setAngleEnd) {
-        if (timeGame > timeGameInterval && timeBool == false) {
+    public void leftRightMoving(float intervalTimeStart, float intervalTimeEnd, float speedStart,
+                                float speedEnd, float setAngleStart, float setAngleEnd) {
+        if (timeGame > timeGameInterval && !timeBool) {
             setSpeed(timeSpeed);
             setMotionAngle(setAngleStart);
             timeGame = 0;
@@ -256,13 +259,34 @@ public class BaseActor extends Group {
             timeGameInterval = MathUtils.random(intervalTimeStart, intervalTimeEnd);
             timeSpeed = MathUtils.random(speedStart, speedEnd);
         }
-        if (timeGame > timeGameInterval && timeBool == true) {
+        if (timeGame > timeGameInterval && timeBool) {
             setSpeed(timeSpeed);
             setMotionAngle(setAngleEnd);
             timeGame = 0;
             timeBool = false;
             timeGameInterval = MathUtils.random(intervalTimeStart, intervalTimeEnd);
             timeSpeed = MathUtils.random(speedStart, speedEnd);
+        }
+    }
+
+    // Метод, который заставляет двигаться спрайт во все четыре стороны самостоятельно
+    int r = 3;
+    int s = 50;
+    public void freeMovementInFourDirections() {
+//        if(timeGame > travelTimeEnemy) {
+//            rotateBy(amountInDegrees * dt);
+//            if(timeGame > travelTimeEnemy * 5) {
+//                timeGame = 0;
+//            }
+//        }
+        setSpeed(s);
+        if(timeGame > r) {
+
+            setMotionAngle(MathUtils.random(0, 360));
+            setRotation(getMotionAngle());
+            timeGame = 0;
+            r = MathUtils.random(1, 5);
+            s = MathUtils.random(50, 200);
         }
     }
 
@@ -401,7 +425,7 @@ public class BaseActor extends Group {
         return list;
     }
 
-    // Метод, который определяет, кеолько экземпляров обьекта определенного типа остается в данный момент времени
+    // Метод, который определяет, сколько экземпляров обьекта определенного типа остается в данный момент времени
     public static int count(Stage stage, String className) {
         return getList(stage, className).size();
     }
